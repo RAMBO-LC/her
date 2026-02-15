@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/Main/solar.html" },
+    { "source": "/Main/(.*)", "destination": "/Main/$1" },
+    { "source": "/app/pages/(.*)", "destination": "/app/pages/$1" },
+    { "source": "/Planet/(.*)", "destination": "/Planet/$1" }
+  ]
+}

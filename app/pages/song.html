@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cozy Music Room with Books</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Emilys+Candy&family=Quintessential&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --wall-color: #6b5b95;
+            --floor-color: #c9a87c;
+            --window-frame: #f5f5f5;
+            --shelf-color: #8b6f47;
+            --plant-green: #5cb85c;
+            --pot-color: #d84315;
+            --spine-pyramid: linear-gradient(315deg, transparent 75%, rgba(255, 255, 255, 0.1) 0),
+                linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.1) 0),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.2) 166px, transparent 0),
+                linear-gradient(45deg, rgba(0, 0, 0, 0.1) 75%, transparent 0);
+            --spine-stairs: repeating-linear-gradient(63deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1) 1px, transparent 3px, transparent 0),
+                linear-gradient(127deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1) 90px, transparent 55%, transparent 0),
+                linear-gradient(transparent 51%, rgba(0, 0, 0, 0.1) 170px);
+            --spine-argyle: repeating-linear-gradient(120deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1) 1px, transparent 1px, transparent 60px),
+                repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1) 1px, transparent 1px, transparent 60px),
+                linear-gradient(60deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1)),
+                linear-gradient(120deg, rgba(0, 0, 0, 0.1) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.1) 75%, rgba(0, 0, 0, 0.1));
+            --spine-tartan: repeating-linear-gradient(transparent, transparent 50px, rgba(0, 0, 0, 0.4) 50px, rgba(0, 0, 0, 0.4) 53px, transparent 53px, transparent 63px, rgba(0, 0, 0, 0.4) 63px, rgba(0, 0, 0, 0.4) 66px, transparent 66px, transparent 116px, rgba(0, 0, 0, 0.5) 116px, rgba(0, 0, 0, 0.5) 166px, rgba(255, 255, 255, 0.2) 166px, rgba(255, 255, 255, 0.2) 169px, rgba(0, 0, 0, 0.5) 169px, rgba(0, 0, 0, 0.5) 179px, rgba(255, 255, 255, 0.2) 179px, rgba(255, 255, 255, 0.2) 182px, rgba(0, 0, 0, 0.5) 182px, rgba(0, 0, 0, 0.5) 232px, transparent 232px),
+                repeating-linear-gradient(270deg, transparent, transparent 50px, rgba(0, 0, 0, 0.4) 50px, rgba(0, 0, 0, 0.4) 53px, transparent 53px, transparent 63px, rgba(0, 0, 0, 0.4) 63px, rgba(0, 0, 0, 0.4) 66px, transparent 66px, transparent 116px, rgba(0, 0, 0, 0.5) 116px, rgba(0, 0, 0, 0.5) 166px, rgba(255, 255, 255, 0.2) 166px, rgba(255, 255, 255, 0.2) 169px, rgba(0, 0, 0, 0.5) 169px, rgba(0, 0, 0, 0.5) 179px, rgba(255, 255, 255, 0.2) 179px, rgba(255, 255, 255, 0.2) 182px, rgba(0, 0, 0, 0.5) 182px, rgba(0, 0, 0, 0.5) 232px, transparent 232px),
+                repeating-linear-gradient(125deg, transparent, transparent 2px, rgba(0, 0, 0, 0.2) 2px, rgba(0, 0, 0, 0.2) 3px, transparent 3px, transparent 5px, rgba(0, 0, 0, 0.2) 5px);
+        }
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            background-color: var(--wall-color);
+            overflow: hidden;
+            font-family: 'Patrick Hand', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+            
+
+        .room {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            perspective: 1000px;
+            background: linear-gradient(to bottom, #8b7ba8 0%, #6b5b95 50%, #4a3f6b 100%);
+        }
+
+        .floor {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 25%;
+            background: repeating-linear-gradient(90deg, #c9a87c 0px, #c9a87c 50px, #b89668 50px, #b89668 52px);
+            transform-origin: bottom;
+            box-shadow: inset 0 20px 50px rgba(0, 0, 0, 0.4), 0 -5px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        
+        /* --- SPOTIFY PLAYLIST BUTTON --- */
+        .p {
+            position: absolute;
+            bottom: 50px;
+            left: 100%;
+            width: 200px;
+            transform: translateX(-50%);
+            background: #1DB954;
+            color: white;
+            border: none;
+            padding: 20px;
+            font-size: 32px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 100;
+            box-shadow:
+                0 8px 25px rgba(29, 185, 84, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1s forwards;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
+
+        .p:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow:
+                0 12px 35px rgba(29, 185, 84, 0.8),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: #1ed760;
+        }
+
+        .p i {
+            font-size: 36px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* --- 3D BOOKSHELF --- */
+        .bookshelf {
+            position: absolute;
+            right: 8%;
+            bottom: 18%;
+            width: 650px;
+            height: 340px;
+            display: flex;
+            flex-wrap: wrap;
+            background: linear-gradient(145deg, #8b6f47, #6d5837);
+            background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
+            padding: 20px 10px 10px 10px;
+            border-radius: 10px;
+            box-shadow: 10px 10px 40px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        .book {
+            width: 45px;
+            height: 280px;
+            position: relative;
+            margin-left: 4px;
+            top: 10px;
+            transform-style: preserve-3d;
+            transform: translateZ(0) rotateY(0);
+            transition: transform 1s;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            -webkit-transform: translateZ(0);
+        }
+
+        .side {
+            position: absolute;
+            border: 2px solid rgba(0, 0, 0, 0.4);
+            border-radius: 3px;
+            font-weight: bold;
+            color: #1a1a1a;
+            text-align: center;
+            transform-origin: center left;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        .spine {
+            position: relative;
+            width: 45px;
+            height: 280px;
+            background-image: var(--spine-tartan);
+            transform: rotateY(0deg) translateZ(0px);
+        }
+
+        .spine-title {
+            margin: 2px;
+            position: absolute;
+            top: 5px;
+            left: 0px;
+            font-size: 15px;
+            color: gold;
+            writing-mode: vertical-rl;
+            text-orientation: sideways;
+        }
+
+
+        .top {
+            width: 45px;
+            height: 190px;
+            top: -2px;
+            background-image: linear-gradient(90deg, white 90%, gray 10%);
+            background-size: 5px 5px;
+            transform: rotateX(90deg) translateZ(95px) translateY(-95px);
+        }
+
+        .cover {
+            width: 190px;
+            height: 280px;
+            top: 0px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            left: 45px;
+            transform: rotateY(90deg) translateZ(0);
+            transition: transform 1s;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            -webkit-transform: rotateY(90deg) translateZ(0);
+            transform-origin: left center;
+        }
+
+        .book:hover {
+            z-index: 100;
+            transform: rotateX(-25deg) rotateY(-40deg) rotateZ(-15deg) translateY(50px) translateX(-30px);
+        }
+
+        /* --- CASSETTE PLAYER ON LEFT --- */
+        .cassette-player {
+            position: absolute;
+            left: 8%;
+            bottom: 18%;
+            background: linear-gradient(145deg, #a8d8ea, #8fc9e0);
+            width: 420px;
+            height: 400px;
+            padding: 35px;
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            border: 5px solid #2c3e50;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), inset 0 2px 10px rgba(255, 255, 255, 0.3);
+            z-index: 15;
+        }
+
+        #audioPlayer {
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        #audioPlayer .row {
+            display: flex;
+            gap: 10px;
+        }
+
+        #audioPlayer .col-xs-3 {
+            flex: 1;
+        }
+
+        #audioPlayer .btn {
+            height: 50px;
+            width: 100%;
+            background-color: black;
+            color: rgb(239, 239, 239);
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s;
+        }
+
+        #audioPlayer .btn:hover {
+            transform: scale(1.05);
+        }
+
+        .cassette {
+            background-color: black;
+            height: 250px;
+            width: 100%;
+            border-radius: 25px;
+            padding: 20px;
+        }
+
+        .label-container {
+            border-radius: 15px;
+            height: 75%;
+        }
+
+        .white {
+            background-color: white;
+            height: 30%;
+            padding-top: 20px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tape-container {
+            height: 50%;
+            display: flex;
+            flex-direction: row;
+            background-color: white;
+        }
+
+        .white-space {
+            background-color: white;
+            height: 100%;
+            flex: 1;
+        }
+
+        .wheel-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            flex: 6;
+            border: white 5px solid;
+            border-radius: 500px;
+            background-color: black;
+        }
+
+        .wheel {
+            width: 50px;
+            height: 50px;
+            background-color: black;
+            border-radius: 50%;
+        }
+
+        .wheel-2 {
+            transform: rotate(90deg);
+        }
+
+        .wheel-overlap {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .inner-circle {
+            top: 5px;
+            left: 5px;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #BEBEBE;
+        }
+
+        .bar {
+            position: absolute;
+            margin: 0 auto;
+            height: 50px;
+            margin-left: 23px;
+            width: 4px;
+            background-color: #BEBEBE;
+            z-index: 10;
+        }
+
+        .wheel-overlap .bar:nth-child(2) {
+            transform: rotate(60deg);
+        }
+
+        .wheel-overlap .bar:nth-child(3) {
+            transform: rotate(90deg);
+        }
+
+        .wheel-overlap .bar:nth-child(4) {
+            transform: rotate(120deg);
+        }
+
+        .wheel-overlap .bar:nth-child(5) {
+            transform: rotate(150deg);
+        }
+
+        .wheel-overlap .bar:nth-child(6) {
+            transform: rotate(180deg);
+        }
+
+        .wheel-overlap .bar:nth-child(7) {
+            transform: rotate(210deg);
+        }
+
+        .red {
+            background-color: red;
+            height: 20%;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .label {
+            text-align: center;
+            font-family: 'Reenie Beanie', cursive;
+            font-size: 1.5rem;
+            flex: 6;
+            text-decoration: underline;
+            color: black;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            min-height: 30px;
+        }
+
+        .trapazoid {
+            border-bottom: 20px solid white;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            height: 0;
+            width: 100%;
+        }
+
+        .spin1 {
+            animation: rotate 2.5s linear infinite;
+        }
+
+        .spin2 {
+            animation: rotate2 2.5s linear infinite;
+        }
+
+        .spinReverse1 {
+            animation: reverse 2.5s linear infinite;
+        }
+
+        .spinReverse2 {
+            animation: reverse2 2.5s linear infinite;
+        }
+
+        @keyframes rotate {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes rotate2 {
+            to {
+                transform: rotate(450deg);
+            }
+        }
+
+        @keyframes reverse {
+            to {
+                transform: rotate(-360deg);
+            }
+        }
+
+        @keyframes reverse2 {
+            to {
+                transform: rotate(-450deg);
+            }
+        }
+
+
+
+        .c1 {
+            width: 100px;
+            height: 40px;
+            top: 50px;
+            left: 30px;
+            animation: float 20s infinite linear;
+        }
+
+        .c2 {
+            width: 80px;
+            height: 30px;
+            top: 100px;
+            right: 50px;
+            animation: float 25s infinite linear reverse;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(20px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+
+
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.8;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <button href = "https://open.spotify.com/playlist/7o52iiQwPytHJxvVXcUhRG?si=57d46d2d125c4043" class="p">Get Full Playlist</button>
+
+    <div class="room">
+        <!-- Floor -->
+        <div class="floor"></div>
+
+
+        <!-- Window -->
+        <div class="window-container">
+            <div class="window-glass">
+                <div class="sun"></div>
+                <div class="cloud c1"></div>
+                <div class="cloud c2"></div>
+            </div>
+            <div class="window-frame-inner">
+                <div class="frame-h"></div>
+                <div class="frame-v"></div>
+            </div>
+        </div>
+
+        <!-- Cassette Player on Left Corner -->
+        <div class="cassette-player">
+            <div class="cassette">
+                <div class="label-container">
+                    <div class="trapazoid"></div>
+                    <div class="white">
+                        <div class="white-space"></div>
+                        <div id="label" class="label"></div>
+                        <div class="white-space"></div>
+                    </div>
+                    <div class="tape-container">
+                        <div class="white-space"></div>
+                        <div class="wheel-container">
+                            <div class="wheel">
+                                <div class="wheel-overlap">
+                                    <div class="inner-circle"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                </div>
+                            </div>
+                            <div class="wheel wheel-2">
+                                <div class="wheel-overlap">
+                                    <div class="inner-circle"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                    <div class="bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white-space"></div>
+                    </div>
+                    <div class="red"></div>
+                </div>
+            </div>
+
+            <div id="audioPlayer">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <button title="Previous Track" class="btn" id="previous" onclick="changeTrack(-1)"><i
+                                class="fa fa-chevron-left"></i></button>
+                    </div>
+                    <div class="col-xs-3">
+                        <button title="Pause Track" onclick="pauseTrack()" class="btn"><i
+                                class="fa fa-pause"></i></button>
+                    </div>
+                    <div class="col-xs-3">
+                        <button title="Play Track" onclick="playTrack()" class="btn"><i class="fa fa-play"></i></button>
+                    </div>
+                    <div class="col-xs-3">
+                        <button title="Next Track" class="btn" id="next" onclick="changeTrack(1)"><i
+                                class="fa fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3D Bookshelf on Right -->
+        <div class="bookshelf">
+            <div class="book" data-song="../../trimmed/song/Bad Habit.mp3" data-title="Bad Habit"
+                onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Bad Habit</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover"
+                    style="background-image: url(../../trimmed/Cover/Bad%20Habit.jpeg);cursor:pointer;"></div>
+            </div>
+
+            <div class="book" data-song="../../trimmed/song/Call this Love.mp3" data-title="Call this Love"
+                onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Call this Love</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover"
+                    style="background-image: url(../../trimmed/Cover/Call%20this%20Love.jpeg);cursor:pointer;"></div>
+            </div>
+
+            <div class="book" data-song="../../trimmed/song/Color.mp3" data-title="Color" onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Color</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover" style="background-image: url(../../trimmed/Cover/Color.jpeg);cursor:pointer;">
+                </div>
+            </div>
+
+            <div class="book" data-song="../../trimmed/song/Just The Way You Are.mp3" data-title="Just The Way You Are"
+                onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Just The Way You Are</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover"
+                    style="background-image: url(../../trimmed/Cover/Just%20the%20Way%20You%20Are.jpeg);cursor:pointer;">
+                </div>
+            </div>
+
+            <div class="book" data-song="../../trimmed/song/Make you mine.mp3" data-title="Make you mine"
+                onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Make you mine</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover"
+                    style="background-image: url(../../trimmed/Cover/Make%20you%20mine.jpeg);cursor:pointer;"></div>
+            </div>
+
+            <div class="book" data-song="../../trimmed/song/Marry You.mp3" data-title="Marry You"
+                onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Marry You</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover"
+                    style="background-image: url(../../trimmed/Cover/Marry%20You.jpeg);cursor:pointer;"></div>
+            </div>
+
+            <div class="book" data-song="../../trimmed/song/Pluto Projector.mp3" data-title="Pluto Projector"
+                onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Pluto Projector</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover"
+                    style="background-image: url(../../trimmed/Cover/Pluto%20Projector.jpeg);cursor:pointer;"></div>
+            </div>
+
+            <div class="book" data-song="../../trimmed/song/Seaside Demo.mp3" data-title="Seaside Demo"
+                onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Seaside Demo</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover"
+                    style="background-image: url(../../trimmed/Cover/Seaside%20Demo.jpeg);cursor:pointer;"></div>
+            </div>
+
+            <div class="book" data-song="../../trimmed/song/Teenage Dream.mp3" data-title="Teenage Dream"
+                onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Teenage Dream</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover"
+                    style="background-image: url(../../trimmed/Cover/Teenage%20Dream.jpeg);cursor:pointer;"></div>
+            </div>
+
+            <div class="book" data-song="../../trimmed/song/Those Eyes.mp3" data-title="Those Eyes"
+                onclick="playBookSong(this)">
+                <div class="side spine">
+                    <span class="spine-title">Those Eyes</span>
+                </div>
+                <div class="side top"></div>
+                <div class="side cover"
+                    style="background-image: url(../../trimmed/Cover/Those%20Eyes.jpeg);cursor:pointer;"></div>
+            </div>
+        </div>
+
+        <div class="instruction">
+            Click on an album to play it in the cassette player! 🎵📚
+        </div>
+
+        <button class="playlist-button" onclick="getPlaylist()">
+            <i class="fa fa-list"></i> Get Playlist
+        </button>
+    </div>
+
+    <script>
+        // Book randomization
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function randomChoice(array) {
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        let spines = Object.values(document.getElementsByClassName("spine"));
+        let covers = Object.values(document.getElementsByClassName("cover"));
+        let tops = Object.values(document.getElementsByClassName("top"));
+
+        let availablePatterns = [
+            "--spine-pyramid",
+            "--spine-stairs",
+            "--spine-argyle",
+            "--spine-tartan"
+        ];
+
+        let availableColors = [
+            "maroon",
+            "darkgreen",
+            "darkolivegreen",
+            "brown",
+            "saddlebrown",
+            "sienna",
+            "midnightblue",
+        ];
+
+        // Assign random height, pattern and color to each book
+        spines.map(function (s, i) {
+            let randomHeight = getRandomInt(220, 290);
+            s.style.height = `${randomHeight}px`;
+            s.style.top = `${280 - randomHeight}px`;
+
+            let randomPattern = randomChoice(availablePatterns);
+            s.style.backgroundImage = `var(${randomPattern})`;
+
+            let randomColor = randomChoice(availableColors);
+            s.style.backgroundColor = randomColor;
+
+            covers[i].style.height = `${randomHeight}px`;
+            covers[i].style.top = `${280 - randomHeight}px`;
+
+            tops[i].style.top = `${280 - randomHeight}px`;
+        });
+
+        // Cassette Player functionality
+        var currentAudio = null;
+        var playing = false;
+
+        function playBookSong(bookElement) {
+            const songPath = bookElement.getAttribute('data-song');
+            const songTitle = bookElement.getAttribute('data-title');
+
+            // Stop current audio if playing
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+
+            // Create new audio
+            currentAudio = new Audio(songPath);
+
+            // Update cassette label
+            document.getElementById("label").innerHTML = songTitle;
+
+            // Play the audio
+            currentAudio.play();
+            playing = true;
+
+            // Start spinning the cassette wheels
+            document.querySelectorAll(".wheel")[0].classList.add("spin1");
+            document.querySelectorAll(".wheel")[1].classList.add("spin2");
+
+            // When song ends, stop spinning
+            currentAudio.addEventListener('ended', function () {
+                playing = false;
+                document.querySelectorAll(".wheel")[0].classList.remove("spin1");
+                document.querySelectorAll(".wheel")[1].classList.remove("spin2");
+            });
+        }
+
+        function playTrack() {
+            if (currentAudio) {
+                currentAudio.play();
+                playing = true;
+                document.querySelectorAll(".wheel")[0].classList.add("spin1");
+                document.querySelectorAll(".wheel")[1].classList.add("spin2");
+            }
+        }
+
+        function pauseTrack() {
+            if (currentAudio) {
+                currentAudio.pause();
+                playing = false;
+                document.querySelectorAll(".wheel")[0].classList.remove("spin1");
+                document.querySelectorAll(".wheel")[1].classList.remove("spin2");
+            }
+        }
+
+        function changeTrack(val) {
+            // This function is kept for the cassette player buttons but doesn't cycle through books
+            // You can enhance this later to cycle through the book songs
+        }
+
+        // Initialize label
+        document.getElementById("label").innerHTML = "Click an album to play";
+    </script>
+</body>
+
+</html>
